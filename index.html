@@ -9,7 +9,7 @@
       margin: 0;
       padding: 0;
       background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-family: 'Times New Roman', Times, serif;
       overflow: hidden;
       display: flex;
       justify-content: center;
@@ -153,7 +153,7 @@
 
     .love-quotes {
       margin-top: 20px;
-      font-size: 1.1rem;
+      font-size: 1.7rem;
       color: #fff;
       animation: fadeIn 2s ease-in-out;
     }
@@ -190,43 +190,94 @@
         opacity: 0;
       }
     }
-
-    @media (max-width: 768px) {
-      .popup {
-        padding: 20px;
-        max-width: 80vw;
-      }
-
-      .popup img {
-        max-width: 300px;
-      }
-    }
-@media (max-width: 480px) {
+    @media (max-width: 1024px) {
   h1 {
-    font-size: 2rem;
+    font-size: 3rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 10px 18px;
+  }
+
+  .popup img {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
   }
 
   p {
     font-size: 1rem;
   }
 
-  .popup {
-    max-width: 95vw;
+  .popup,
+  .butterfly-popup,
+  #finalPopup {
+    width: 90vw;
+    font-size: 0.9rem;
     padding: 20px;
+    overflow-y: auto;
+  }
+
+  .popup img,
+  #finalPopup img {
+    max-width: 90%;
+  }
+
+  .popup button,
+  .butterfly-popup button {
     font-size: 1rem;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem;
   }
 
-  .popup h2 {
-    font-size: 1.5rem;
+  p {
+    font-size: 0.9rem;
   }
 
-  .popup img {
-    max-width: 250px;
+  .popup h2,
+  #finalPopup h2 {
+    font-size: 1.4rem;
   }
 
-  .popup button {
-    font-size: 1rem;
-    padding: 10px 16px;
+  .popup img,
+  #finalPopup img {
+    max-width: 230px;
+  }
+
+  .popup,
+  .butterfly-popup,
+  #finalPopup {
+    padding: 16px;
+    width: 95vw;
+    max-height: 90vh;
+  }
+
+  .popup button,
+  .butterfly-popup button {
+    font-size: 0.9rem;
+    padding: 8px 14px;
+  }
+
+  .love-quotes {
+    font-size: 1.2rem;
   }
 }
 
