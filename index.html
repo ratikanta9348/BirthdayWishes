@@ -65,6 +65,21 @@
       to { opacity: 1; transform: scale(1); }
     }
 
+    @keyframes popupAppear {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    .popup.show {
+      animation: popupAppear 0.6s ease-out forwards;
+    }
+
     .confetti {
       position: absolute;
       width: 10px;
@@ -190,104 +205,51 @@
         opacity: 0;
       }
     }
+
     @media (max-width: 1024px) {
-  h1 {
-    font-size: 3rem;
-  }
+      h1 { font-size: 3rem; }
+      p { font-size: 1.2rem; }
+      button { font-size: 1rem; padding: 10px 18px; }
+      .popup img { max-width: 90%; }
+    }
 
-  p {
-    font-size: 1.2rem;
-  }
+    @media (max-width: 768px) {
+      .container { padding: 0 20px; }
+      h1 { font-size: 2.5rem; }
+      p { font-size: 1rem; }
+      .popup,
+      .butterfly-popup,
+      #finalPopup {
+        width: 90vw;
+        font-size: 0.9rem;
+        padding: 20px;
+        overflow-y: auto;
+      }
+    }
 
-  button {
-    font-size: 1rem;
-    padding: 10px 18px;
-  }
-
-  .popup img {
-    max-width: 90%;
-  }
-}
-
-@media (max-width: 768px) {
-  .container {
-    padding: 0 20px;
-  }
-
-  h1 {
-    font-size: 2.5rem;
-  }
-
-  p {
-    font-size: 1rem;
-  }
-
-  .popup,
-  .butterfly-popup,
-  #finalPopup {
-    width: 90vw;
-    font-size: 0.9rem;
-    padding: 20px;
-    overflow-y: auto;
-  }
-
-  .popup img,
-  #finalPopup img {
-    max-width: 90%;
-  }
-
-  .popup button,
-  .butterfly-popup button {
-    font-size: 1rem;
-    padding: 8px 16px;
-  }
-}
-
-@media (max-width: 480px) {
-  h1 {
-    font-size: 2rem;
-  }
-
-  p {
-    font-size: 0.9rem;
-  }
-
-  .popup h2,
-  #finalPopup h2 {
-    font-size: 1.4rem;
-  }
-
-  .popup img,
-  #finalPopup img {
-    max-width: 230px;
-  }
-
-  .popup,
-  .butterfly-popup,
-  #finalPopup {
-    padding: 16px;
-    width: 95vw;
-    max-height: 90vh;
-  }
-
-  .popup button,
-  .butterfly-popup button {
-    font-size: 0.9rem;
-    padding: 8px 14px;
-  }
-
-  .love-quotes {
-    font-size: 1.2rem;
-  }
-}
-
+    @media (max-width: 480px) {
+      h1 { font-size: 2rem; }
+      p { font-size: 0.9rem; }
+      .popup h2, #finalPopup h2 { font-size: 1.4rem; }
+      .popup img, #finalPopup img { max-width: 230px; }
+      .popup, .butterfly-popup, #finalPopup {
+        padding: 16px;
+        width: 95vw;
+        max-height: 90vh;
+      }
+      .popup button, .butterfly-popup button {
+        font-size: 0.9rem;
+        padding: 8px 14px;
+      }
+      .love-quotes { font-size: 1.2rem; }
+    }
   </style>
 </head>
 <body>
 
   <!-- Background Music -->
-  <audio autoplay loop>
-    <source src="./theuned_happy-birthday-crowd(chosic.com).mp3" type="audio/mp3">
+  <audio id="bgMusic" loop>
+    <source src="./yt1z.net - Happy birthday To you Songs Best Birthday WhatsApp Status 2021 ShortsVideo (320 KBps).mp3" type="audio/mp3">
   </audio>
 
   <div class="container">
@@ -300,7 +262,6 @@
     <p>Wishing you love, laughter, and cake today and always!</p>
     <button onclick="showPopup()">Click for a Surprise 🎁</button>
   </div>
-  
 
   <div class="popup" id="birthdayPopup">
     <h2>🎊 Happy Birthday! 🎊</h2>
@@ -311,7 +272,6 @@
     <button onclick="closePopup()">Close</button>
   </div>
 
-  <!-- Butterfly Love Quotes Popup -->
   <div class="butterfly-popup" id="butterflyPopup">
     <p>💖 Birthday Wishes 💖</p>
     <div class="love-quotes">
@@ -326,7 +286,6 @@
     <button onclick="closeButterflyPopup()">Close</button>
   </div>
 
-  <!-- Final Surprise Popup -->
   <div class="popup" id="finalPopup">
     <h2>🌟 It's Your Day! 🌟</h2>
     <p>Keep shining, keep dreaming big, and never stop believing in yourself. ✨</p>
@@ -336,7 +295,6 @@
   </div>
 
   <script>
-    // Confetti and hearts
     function createConfetti() {
       for (let i = 0; i < 50; i++) {
         const confetti = document.createElement('div');
@@ -369,40 +327,78 @@
     createConfetti();
     createHearts();
 
-    // Popup logic
     function showPopup() {
-      document.getElementById('birthdayPopup').style.display = 'block';
-      createButterflies(); // Start butterfly rain
-      setInterval(createButterflies, 5000); // Keep raining every 5 seconds
-    }
+  const popup = document.getElementById('birthdayPopup');
+  popup.classList.remove('show');
+  popup.style.display = 'block';
+  void popup.offsetWidth;
+  popup.classList.add('show');
 
-    function closePopup() {
-      document.getElementById('birthdayPopup').style.display = 'none';
-    }
+  // ✅ Play background music after user interaction
+  const audio = document.getElementById('bgMusic');
+  if (audio.paused) {
+    audio.play().catch(e => console.log("Autoplay blocked:", e));
+  }
+
+  createButterflies();
+  setInterval(createButterflies, 5000);
+}
+
+function closePopup() {
+  const popup = document.getElementById('birthdayPopup');
+  popup.classList.remove('show');
+  popup.style.display = 'none';
+
+  // Pause audio
+  const audio = document.getElementById('bgMusic');
+  if (!audio.paused) {
+    audio.pause();
+  }
+}
 
     function openButterflyPopup() {
       document.getElementById('birthdayPopup').style.display = 'none';
       document.getElementById('butterflyPopup').style.display = 'block';
+       // Pause audio
+  // ✅ Play background music after user interaction
+  const audio = document.getElementById('bgMusic');
+  if (audio.paused) {
+    audio.play().catch(e => console.log("Autoplay blocked:", e));
+  }
     }
 
-    function closeButterflyPopup() {
-      document.getElementById('butterflyPopup').style.display = 'none';
-    }
+   
 
     function showFinalPopup() {
-      document.getElementById('butterflyPopup').style.display = 'none';
-      document.getElementById('finalPopup').style.display = 'block';
-    }
+  document.getElementById('butterflyPopup').style.display = 'none'; // ✅ Hide the second popup
+  const popup = document.getElementById('finalPopup');
+  popup.classList.remove('show');
+  popup.style.display = 'block';
+  void popup.offsetWidth;
+  popup.classList.add('show');
+   // ✅ Play background music after user interaction
+   const audio = document.getElementById('bgMusic');
+  if (audio.paused) {
+    audio.play().catch(e => console.log("Autoplay blocked:", e));
+  }
+}
 
-    function closeFinalPopup() {
-      document.getElementById('finalPopup').style.display = 'none';
-    }
+function closeFinalPopup() {
+  const popup = document.getElementById('finalPopup');
+  popup.classList.remove('show');
+  popup.style.display = 'none';
 
-    // Butterfly rain effect
+  // Pause audio
+  const audio = document.getElementById('bgMusic');
+  if (!audio.paused) {
+    audio.pause();
+  }
+}
+
     function createButterflies() {
       for (let i = 0; i < 15; i++) {
         const butterfly = document.createElement('img');
-        butterfly.src = 'https://media.tenor.com/sh__UVOC5UQAAAAi/borboletas-butterflies.gif'; // path to your PNG
+        butterfly.src = 'https://media.tenor.com/sh__UVOC5UQAAAAi/borboletas-butterflies.gif';
         butterfly.classList.add('butterfly');
         butterfly.style.left = Math.random() * 100 + 'vw';
         butterfly.style.animationDuration = (Math.random() * 3 + 3) + 's';
